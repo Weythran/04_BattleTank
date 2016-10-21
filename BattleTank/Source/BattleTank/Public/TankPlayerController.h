@@ -24,7 +24,7 @@ private:
 	
 	// Start the tank moving the barrel and turret so that the shot
 	// would hit where the crosshair intersects the world
-	void ATankPlayerController::AimTowardsCrosshair();
+	void AimTowardsCrosshair();
 
 	// Return an OUT parameter, true if hit landscape
 	bool GetSightRayHitLocation(FVector& HitLocation) const;
