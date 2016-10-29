@@ -1,6 +1,7 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "BattleTank.h"
+#include "TankBarrel.h"
 #include "TankAimingComponent.h"
 
 
@@ -15,7 +16,7 @@ UTankAimingComponent::UTankAimingComponent()
 	// ...
 }
 
-void UTankAimingComponent::SetBarrelReference(UStaticMeshComponent* BarrelToSet)
+void UTankAimingComponent::SetBarrelReference(UTankBarrel* BarrelToSet)
 {
 	Barrel = BarrelToSet;
 }
@@ -38,8 +39,7 @@ void UTankAimingComponent::AimAt(FVector HitLocation, float LaunchSpeed)
 	{
 		auto AimDirection = OutLaunchVelocity.GetSafeNormal();
 		MoveBarrelTowards(AimDirection);
-		
-		
+				
 		/// auto TankName = GetOwner()->GetName();
 		/// UE_LOG(LogTemp, Warning, TEXT("%s aiming at %s"), *TankName, *AimDirection.ToString());
 	}
@@ -48,7 +48,6 @@ void UTankAimingComponent::AimAt(FVector HitLocation, float LaunchSpeed)
 	/// auto OurTankName = GetOwner()->GetName();
 	/// auto BarrelLocation = Barrel->GetComponentLocation();
 	/// UE_LOG(LogTemp, Warning, TEXT("Firing at %f"), *OurTankName, *HitLocation.ToString(), *BarrelLocation.ToString());
-
 }
 
 void UTankAimingComponent::MoveBarrelTowards(FVector AimDirection)
@@ -57,5 +56,7 @@ void UTankAimingComponent::MoveBarrelTowards(FVector AimDirection)
 	auto AimAsRotator = AimDirection.Rotation();
 	auto DeltaRotator = AimAsRotator - BarrelRotator;
 
-	UE_LOG(LogTemp, Warning, TEXT("AimAsRotator: %s"), *AimAsRotator.ToString());
+	// UE_LOG(LogTemp, Warning, TEXT("AimAsRotator: %s"), *AimAsRotator.ToString());
+
+	Barrel->Elevate(5); // TODO remove magic number
 }
