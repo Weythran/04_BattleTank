@@ -32,7 +32,10 @@ void UTankAimingComponent::AimAt(FVector HitLocation, float LaunchSpeed)
 		OutLaunchVelocity,
 		StartLocation,
 		HitLocation,
-		LaunchSpeed,
+		LaunchSpeed, 
+		0,
+		0,
+		false,
 		ESuggestProjVelocityTraceOption::DoNotTrace
 	); // Calculate the OutLaunchVelocity
 	if (bHaveAimSolution)
