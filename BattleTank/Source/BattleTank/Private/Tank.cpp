@@ -33,14 +33,14 @@ void ATank::SetupPlayerInputComponent(class UInputComponent* InputComponent)
 
 void ATank::Fire()
 {
-	UE_LOG(LogTemp, Warning, TEXT("Fire!"));
 	if (!Barrel) { return; }
 	// spawn a projectile at the socket location
-	GetWorld()->SpawnActor<AProjectile>(ProjectileBlueprint,
+	auto Projectile = GetWorld()->SpawnActor<AProjectile>(ProjectileBlueprint,
 		Barrel->GetSocketLocation(FName("Projectile")),
 		Barrel->GetSocketRotation(FName("Projectile")),
 		FActorSpawnParameters()
 		);
+	Projectile->LaunchProjectile(LaunchSpeed);
 }
 
 void ATank::SetBarrelReference(UTankBarrel* BarrelToSet)
