@@ -24,4 +24,7 @@ private:
 	// Called every frame
 	virtual void Tick(float DeltaSeconds) override;
 
+	// How close can the AI tank get
+	float AcceptanceRadius = 3000;
+
 };
