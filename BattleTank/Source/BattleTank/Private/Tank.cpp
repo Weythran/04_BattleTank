@@ -17,14 +17,18 @@ ATank::ATank()
 	// Commented out due to lecture 160 refactoring
 	// No need to protect pointers, because this is added at construction (i.e., it's likely to "fail")
 	// TankAimingComponent = CreateDefaultSubobject<UTankAimingComponent>(FName("Aiming Component"));
+	auto TankName = GetName();
+	UE_LOG(LogTemp, Warning, TEXT("[%s] DONKEY: ATank() constructor called - from C++"), *TankName)
 
 }
 
 // Called when the game starts or when spawned
 void ATank::BeginPlay()
 {
-	Super::BeginPlay();
-	
+	Super::BeginPlay(); // Needed for BP BeginPlay to run!
+
+	auto TankName = GetName();
+	UE_LOG(LogTemp,Warning,TEXT("[%s] DONKEY: BeginPlay() called - from C++"), *TankName)
 }
 
 void ATank::Fire()
