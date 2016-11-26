@@ -6,7 +6,15 @@
 #include "TankAimingComponent.h"
 
 
+void UTankAimingComponent::Initialise(UTankBarrel* BarrelToSet, UTankTurret* TurretToSet)
+{
+	Barrel = BarrelToSet;
+	Turret = TurretToSet;
+}
+
 // Sets default values for this component's properties
+/*
+// Commented out due to lecture 160 refactoring
 UTankAimingComponent::UTankAimingComponent()
 {
 	// Set this component to be initialized when the game starts, and to be ticked every frame.  You can turn these features
@@ -28,6 +36,7 @@ void UTankAimingComponent::SetTurretReference(UTankTurret* TurretToSet)
 	if (!TurretToSet) { return; }
 	Turret = TurretToSet;
 }
+*/
 
 void UTankAimingComponent::AimAt(FVector HitLocation, float LaunchSpeed)
 {
@@ -50,19 +59,25 @@ void UTankAimingComponent::AimAt(FVector HitLocation, float LaunchSpeed)
 	{
 		auto AimDirection = OutLaunchVelocity.GetSafeNormal();
 		MoveBarrelTowards(AimDirection);
-		MoveTurretTowards(AimDirection);
+		// Commented out due to lecture 160 refactoring - consolidated with MoveBarrelTowards()
+		// MoveTurretTowards(AimDirection);
 	}
 }
 
 void UTankAimingComponent::MoveBarrelTowards(FVector AimDirection)
 {
+	if (!Barrel || !Turret) { return; }
+	// Work out the difference between current barrel rotation and AimDirection
 	auto BarrelRotator = Barrel->GetForwardVector().Rotation();
 	auto AimAsRotator = AimDirection.Rotation();
 	auto DeltaRotator = AimAsRotator - BarrelRotator;
 
 	Barrel->Elevate(DeltaRotator.Pitch);
+	Turret->RotateTurret(DeltaRotator.Yaw);
 }
 
+/*
+// Commented out due to lecture 160 refactoring - consolidated with MoveBarrelTowards()
 void UTankAimingComponent::MoveTurretTowards(FVector AimDirection)
 {
 	auto TurretRotator = Turret->GetForwardVector().Rotation();
@@ -71,4 +86,4 @@ void UTankAimingComponent::MoveTurretTowards(FVector AimDirection)
 
 	Turret->RotateTurret(DeltaRotator.Yaw);
 }
-
+*/
