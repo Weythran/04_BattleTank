@@ -5,7 +5,7 @@
 #include "GameFramework/Pawn.h"
 #include "Tank.generated.h" // Put new includes above this line
 
-// Forward declarations
+/// Forward declarations
 class UTankAimingComponent;
 class UTankMovementComponent;
 class UTankBarrel;
