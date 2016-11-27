@@ -55,7 +55,7 @@ void UTankAimingComponent::AimAt(FVector HitLocation, float LaunchSpeed)
 		false,
 		ESuggestProjVelocityTraceOption::DoNotTrace
 	); // Calculate the OutLaunchVelocity
-	if (ensure(bHaveAimSolution))
+	if (bHaveAimSolution)
 	{
 		auto AimDirection = OutLaunchVelocity.GetSafeNormal();
 		MoveBarrelTowards(AimDirection);

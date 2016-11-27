@@ -43,6 +43,7 @@ private:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
+	// TODO remove once firing has been moved to AimingComponent
 	UPROPERTY(EditAnywhere, Category = "Firing")
 	float LaunchSpeed = 100000; // Sensible starting value of 1000 m/s
 
