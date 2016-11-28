@@ -3,7 +3,8 @@
 #include "BattleTank.h"
 #include "TankBarrel.h"
 #include "Projectile.h"
-#include "TankAimingComponent.h"
+///	Commented out due to lecture 169 changes
+///	#include "TankAimingComponent.h"
 #include "Tank.h"
 
 
@@ -23,7 +24,8 @@ void ATank::BeginPlay()
 {
 	Super::BeginPlay(); // Needed for BP BeginPlay to run!
 
-	TankAimingComponent = FindComponentByClass<UTankAimingComponent>();
+/// Commented out due to lecture 169 changes
+///	TankAimingComponent = FindComponentByClass<UTankAimingComponent>();
 }
 
 void ATank::Fire()
@@ -56,9 +58,12 @@ void ATank::SetTurretReference(UTankTurret* TurretToSet)
 }
 */
 
+/*
+/// Commented out due to lecture 169 changes
 void ATank::AimAt(FVector HitLocation)
 {
 	if (!ensure(TankAimingComponent)) { return; }
 	TankAimingComponent->AimAt(HitLocation, LaunchSpeed);
 
 }
+*/

@@ -13,8 +13,7 @@ void UTankAimingComponent::Initialise(UTankBarrel* BarrelToSet, UTankTurret* Tur
 }
 
 // Sets default values for this component's properties
-/*
-// Commented out due to lecture 160 refactoring
+
 UTankAimingComponent::UTankAimingComponent()
 {
 	// Set this component to be initialized when the game starts, and to be ticked every frame.  You can turn these features
@@ -25,6 +24,8 @@ UTankAimingComponent::UTankAimingComponent()
 	// ...
 }
 
+/*
+/// Commented out due to lecture 160 refactoring
 void UTankAimingComponent::SetBarrelReference(UTankBarrel* BarrelToSet)
 {
 	if (!BarrelToSet) { return; }
@@ -38,7 +39,7 @@ void UTankAimingComponent::SetTurretReference(UTankTurret* TurretToSet)
 }
 */
 
-void UTankAimingComponent::AimAt(FVector HitLocation, float LaunchSpeed)
+void UTankAimingComponent::AimAt(FVector HitLocation)
 {
 	if (!ensure(Barrel)) { return; }
 	FVector OutLaunchVelocity;

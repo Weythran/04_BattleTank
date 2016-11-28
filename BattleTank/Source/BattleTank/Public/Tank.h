@@ -6,7 +6,8 @@
 #include "Tank.generated.h" // Put new includes above this line
 
 /// Forward declarations
-class UTankAimingComponent;
+/// Commented out due to lecture 169 changes
+///class UTankAimingComponent;
 class UTankBarrel;
 class UTankTurret;
 class AProjectile;
@@ -26,14 +27,16 @@ public:
 //	UFUNCTION(BlueprintCallable, Category = "Setup")
 //	void SetTurretReference(UTankTurret* TurretToSet);
 
-	void AimAt(FVector HitLocation);
+//	Commented out due to lecture 169 changes
+//	void AimAt(FVector HitLocation);
 
 	UFUNCTION(BlueprintCallable, Category = "Firing")
 	void Fire();
 
-protected:
-	UPROPERTY(BlueprintReadOnly)
-	UTankAimingComponent* TankAimingComponent = nullptr;
+//	protected:
+//	Commented out due to lecture 169 changes
+//	UPROPERTY(BlueprintReadOnly)
+//	UTankAimingComponent* TankAimingComponent = nullptr;
 
 private:
 
