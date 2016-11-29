@@ -1,8 +1,6 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "BattleTank.h"
-/// Commented out due to lecture 169 changes
-/// #include "Tank.h"
 #include "TankAimingComponent.h"
 #include "TankPlayerController.h"
 
@@ -48,8 +46,6 @@ bool ATankPlayerController::GetSightRayHitLocation(FVector& HitLocation) const
 	FVector LookDirection;
 	if (GetLookDirection(ScreenLocation, LookDirection))
 	{
-		/// UE_LOG(LogTemp, Warning, TEXT("LookDirection: %s"), *LookDirection.ToString());
-		/// Line-trace along that LookDirection, and we see what we hit (up to a max distance)
 		GetLookVectorHitLocation(LookDirection, HitLocation);
 	}
 
@@ -87,13 +83,3 @@ bool ATankPlayerController::GetLookDirection(FVector2D ScreenLocation, FVector& 
 		LookDirection
 	);
 }
-
-	/*
-	FCollisionQueryParams TraceParameters(FName(TEXT("")), false, GetOwner());
-	GetWorld()->LineTraceSingleByObjectType(
-		OUT HitLocation,
-		GetReachLineStart(),
-		GetReachLineEnd(),
-		FCollisionObjectQueryParams(ECollisionChannel::ECC_PhysicsBody),
-		TraceParameters
-	);*/

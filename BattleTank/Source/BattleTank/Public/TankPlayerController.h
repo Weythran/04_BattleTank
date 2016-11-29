@@ -2,12 +2,9 @@
 
 #pragma once
 
-// #include "Tank.h"
 #include "GameFramework/PlayerController.h"
 #include "TankPlayerController.generated.h" // Must be the last include
 
-/// Commented out due to lecture 169 changes
-/// class ATank;
 class UTankAimingComponent;
 
 /**
