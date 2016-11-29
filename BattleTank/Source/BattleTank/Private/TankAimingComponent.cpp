@@ -12,13 +12,6 @@ void UTankAimingComponent::Initialise(UTankBarrel* BarrelToSet, UTankTurret* Tur
 	Turret = TurretToSet;
 }
 
-bool UTankAimingComponent::IsBarrelMoving()
-{
-	if (!ensure(Barrel)) { return false; }
-	auto BarrelForward = Barrel->GetForwardVector();
-	return !BarrelForward.Equals(AimDirection, 0.01);
-}
-
 // Sets default values for this component's properties
 UTankAimingComponent::UTankAimingComponent()
 {
@@ -40,16 +33,32 @@ void UTankAimingComponent::TickComponent(float DeltaTime, enum ELevelTick TickTy
 {
 	if ((FPlatformTime::Seconds() - LastFireTime) < ReloadTimeInSeconds)
 	{
+		//	UE_LOG(LogTemp, Warning, TEXT("Reloading - RED"))
 		FiringState = EFiringState::Reloading;
 	}
 	else if (IsBarrelMoving())
 	{
+		//	UE_LOG(LogTemp, Warning, TEXT("Aiming - YELLOW"))
 		FiringState = EFiringState::Aiming;
 	}
 	else
 	{
+		//	UE_LOG(LogTemp, Warning, TEXT("Locked - GREEN"))
 		FiringState = EFiringState::Locked;
 	}
+}
+
+bool UTankAimingComponent::IsBarrelMoving()
+{
+	if (!ensure(Barrel)) { return false; }
+	auto BarrelForward = Barrel->GetForwardVector();
+	auto ADString = AimDirection.ToString();
+	auto BFString = BarrelForward.ToString();
+	if (BarrelForward.Equals(AimDirection, 0.01))
+	{
+		UE_LOG(LogTemp, Warning, TEXT("Vectors are equal: AimDirection %s; BarrelForward %s"), *ADString, *BFString)
+	}
+	return !BarrelForward.Equals(AimDirection, 0.01);
 }
 
 void UTankAimingComponent::AimAt(FVector HitLocation)
@@ -71,7 +80,7 @@ void UTankAimingComponent::AimAt(FVector HitLocation)
 	); // Calculate the OutLaunchVelocity
 	if (bHaveAimSolution)
 	{
-		auto AimDirection = OutLaunchVelocity.GetSafeNormal();
+		AimDirection = OutLaunchVelocity.GetSafeNormal();
 		MoveBarrelTowards(AimDirection);
 	}
 }
