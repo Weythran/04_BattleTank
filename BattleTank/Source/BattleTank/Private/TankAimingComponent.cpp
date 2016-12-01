@@ -19,7 +19,6 @@ UTankAimingComponent::UTankAimingComponent()
 	// off to improve performance if you don't need them.
 	bWantsBeginPlay = true;
 	PrimaryComponentTick.bCanEverTick = true;
-
 	// ...
 }
 
@@ -27,11 +26,17 @@ void UTankAimingComponent::BeginPlay()
 {
 	// So that first fire is after initial reload
 	LastFireTime = FPlatformTime::Seconds();
+	GetRoundsLeft();
 }
 
 void UTankAimingComponent::TickComponent(float DeltaTime, enum ELevelTick TickType, FActorComponentTickFunction *ThisTickFunction)
 {
-	if ((FPlatformTime::Seconds() - LastFireTime) < ReloadTimeInSeconds)
+	if (RoundsLeft <= 0)
+	{
+		//	UE_LOG(LogTemp, Warning, TEXT("OutOfAmmo - GREY"))
+		FiringState = EFiringState::OutOfAmmo;
+	}
+	else if ((FPlatformTime::Seconds() - LastFireTime) < ReloadTimeInSeconds)
 	{
 		//	UE_LOG(LogTemp, Warning, TEXT("Reloading - RED"))
 		FiringState = EFiringState::Reloading;
@@ -46,6 +51,8 @@ void UTankAimingComponent::TickComponent(float DeltaTime, enum ELevelTick TickTy
 		//	UE_LOG(LogTemp, Warning, TEXT("Locked - GREEN"))
 		FiringState = EFiringState::Locked;
 	}
+	auto TankName = GetOwner()->GetName();
+	UE_LOG(LogTemp, Warning, TEXT("%s has %i rounds left"), *TankName, RoundsLeft)
 }
 
 EFiringState UTankAimingComponent::GetFiringState() const
@@ -112,16 +119,25 @@ void UTankAimingComponent::MoveBarrelTowards(FVector AimDirection)
 
 void UTankAimingComponent::Fire()
 {
-	if ((FiringState != EFiringState::Reloading))
+	if ((FiringState == EFiringState::Locked || FiringState == EFiringState::Aiming))
 	{
 		if (!ensure(Barrel)) { return; }
 		if (!ensure(ProjectileBlueprint)) { return; }
 		auto Projectile = GetWorld()->SpawnActor<AProjectile>(ProjectileBlueprint,
-			Barrel->GetSocketLocation(FName("Projectile")),
-			Barrel->GetSocketRotation(FName("Projectile"))
-			);
+		Barrel->GetSocketLocation(FName("Projectile")),
+		Barrel->GetSocketRotation(FName("Projectile"))
+		);
+		
 		Projectile->LaunchProjectile(LaunchSpeed);
+		RoundsLeft--;
+		GetRoundsLeft();
 		LastFireTime = FPlatformTime::Seconds();
+
 	}
 	
+}
+
+int32 UTankAimingComponent::GetRoundsLeft() const
+{
+	return RoundsLeft; 
 }

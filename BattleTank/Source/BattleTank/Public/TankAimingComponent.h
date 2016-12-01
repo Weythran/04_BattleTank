@@ -15,7 +15,8 @@ UENUM()
 enum class EFiringState : uint8 {
 	Reloading,
 	Aiming,
-	Locked
+	Locked, 
+	OutOfAmmo
 };
 
 // Holds barrel's properties and Elevate() method
@@ -38,12 +39,18 @@ public:
 
 	EFiringState GetFiringState() const;
 
+	UFUNCTION(BlueprintCallable, Category = "Firing")
+	int32 GetRoundsLeft() const;
+
 protected:
 	UPROPERTY(BlueprintReadOnly, Category = "State")
 	EFiringState FiringState = EFiringState::Reloading;
 
 	UPROPERTY(BlueprintReadOnly)
 	UTankAimingComponent* TankAimingComponent = nullptr;
+
+	UPROPERTY(EditAnywhere, Category = "Firing")
+	int32 RoundsLeft = 3;
 
 private:
 	// Sets default values for this component's properties
@@ -68,4 +75,5 @@ private:
 	double LastFireTime = 0;
 
 	FVector AimDirection;
+
 };
