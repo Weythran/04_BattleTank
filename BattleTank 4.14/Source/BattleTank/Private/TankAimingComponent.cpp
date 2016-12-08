@@ -17,7 +17,7 @@ UTankAimingComponent::UTankAimingComponent()
 {
 	// Set this component to be initialized when the game starts, and to be ticked every frame.  You can turn these features
 	// off to improve performance if you don't need them.
-	bWantsBeginPlay = true;
+	// bWantsBeginPlay = true;
 	PrimaryComponentTick.bCanEverTick = true;
 	// ...
 }
@@ -51,8 +51,6 @@ void UTankAimingComponent::TickComponent(float DeltaTime, enum ELevelTick TickTy
 		//	UE_LOG(LogTemp, Warning, TEXT("Locked - GREEN"))
 		FiringState = EFiringState::Locked;
 	}
-	auto TankName = GetOwner()->GetName();
-	UE_LOG(LogTemp, Warning, TEXT("%s has %i rounds left"), *TankName, RoundsLeft)
 }
 
 EFiringState UTankAimingComponent::GetFiringState() const
