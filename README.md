@@ -1,1 +1,1 @@
-Experimenting with Unreal Engine game design using C++ and Blueprint.
+Practicing C++ via the Unreal Engine and Blueprint platforms.
