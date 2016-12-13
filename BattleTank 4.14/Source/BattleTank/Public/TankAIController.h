@@ -8,8 +8,6 @@
 /**
  * 
  */
-/// Commente out due to lecture 169 changes
-/// class ATank;
 
 class UTankAimingComponent;
 
@@ -28,7 +26,12 @@ private:
 
 	virtual void BeginPlay() override;
 
+	// This method gets called when the AI tank gets possessed
+	virtual void SetPawn(APawn* InPawn) override;
+
 	// Called every frame
 	virtual void Tick(float DeltaSeconds) override;
 
+	UFUNCTION()
+	void OnPossessedTankDeath();
 };

@@ -3,10 +3,29 @@
 #include "BattleTank.h"
 #include "TankAimingComponent.h"
 #include "TankAIController.h"
+#include "Tank.h" // so we can implement OnDeath
 
 void ATankAIController::BeginPlay()
 {
 	Super::BeginPlay();
+}
+
+void ATankAIController::SetPawn(APawn *InPawn)
+{
+	Super::SetPawn(InPawn);
+	if (ensure(InPawn))
+	{
+		auto PossessedTank = Cast<ATank>(InPawn);
+		if (!ensure(PossessedTank)) { return; }
+
+		// Subscribe our local method to the tank's death event
+		PossessedTank->OnDeath.AddUniqueDynamic(this, &ATankAIController::OnPossessedTankDeath);
+	}
+}
+
+void ATankAIController::OnPossessedTankDeath()
+{
+	UE_LOG(LogTemp, Warning, TEXT("OnPossessedTankDeath() called"))
 }
 
 // Called every frame
@@ -24,8 +43,6 @@ void ATankAIController::Tick(float DeltaTime)
 
 	if (AimingComponent->GetFiringState() == EFiringState::Locked)
 	{
-		AimingComponent->Fire(); // TODO limit firing rate
+		AimingComponent->Fire();
 	}
 }
-
-
