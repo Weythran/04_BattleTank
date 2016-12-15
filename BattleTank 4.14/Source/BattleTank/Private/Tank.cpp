@@ -15,15 +15,24 @@ ATank::ATank()
 	PrimaryActorTick.bCanEverTick = false;
 }
 
+void ATank::BeginPlay()
+{
+	Super::BeginPlay();
+	CurrentHealth = StartingHealth;
+}
+
 float ATank::TakeDamage(float DamageAmount, struct FDamageEvent const& DamageEvent, class AController* EventInstigator, AActor* DamageCauser)
 {
-	Super::TakeDamage(DamageAmount, DamageEvent, EventInstigator, DamageCauser);
+	// Super::TakeDamage(DamageAmount, DamageEvent, EventInstigator, DamageCauser);
 	int32 DamagePoints = FPlatformMath::RoundToInt(DamageAmount);
 	int32 DamageToApply = FMath::Clamp(DamagePoints, 0, CurrentHealth);
 	CurrentHealth -= DamageToApply;
 	if (CurrentHealth <= 0)
 	{	
 		OnDeath.Broadcast();
+		// DestructionSmoke = CreateDefaultSubobject<UParticleSystemComponent>(FName("Destruction Smoke"));
+		// DestructionSmoke->AttachToComponent(RootComponent, FAttachmentTransformRules::KeepRelativeTransform);
+		// DestructionSmoke->Activate();
 	}
 
 	return DamageToApply;

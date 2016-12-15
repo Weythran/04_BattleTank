@@ -13,7 +13,7 @@ void ATankAIController::BeginPlay()
 void ATankAIController::SetPawn(APawn *InPawn)
 {
 	Super::SetPawn(InPawn);
-	if (ensure(InPawn))
+	if (InPawn)
 	{
 		auto PossessedTank = Cast<ATank>(InPawn);
 		if (!ensure(PossessedTank)) { return; }
@@ -25,7 +25,9 @@ void ATankAIController::SetPawn(APawn *InPawn)
 
 void ATankAIController::OnPossessedTankDeath()
 {
-	UE_LOG(LogTemp, Warning, TEXT("OnPossessedTankDeath() called"))
+	auto PossessedTank = GetPawn();
+	if (!ensure(PossessedTank)) { return; }
+	PossessedTank->DetachFromControllerPendingDestroy();
 }
 
 // Called every frame

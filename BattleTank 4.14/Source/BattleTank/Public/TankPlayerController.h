@@ -24,6 +24,9 @@ private:
 
 	virtual void Tick(float DeltaTime) override;
 
+	// This method gets called when the player tank gets possessed
+	virtual void SetPawn(APawn* InPawn) override;
+
 	// Start the tank moving the barrel so that a shot would hit where
 	// the crosshair intersects the world
 	void AimTowardsCrosshair();
@@ -39,6 +42,9 @@ private:
 
 	UPROPERTY(EditDefaultsOnly)
 	float LineTraceRange = 10000000;
+
+	UFUNCTION()
+	void OnPossessedTankDeath();
 
 	bool GetLookDirection(FVector2D ScreenLocation, FVector& LookDirection) const;
 	bool GetLookVectorHitLocation(FVector LookDirection, FVector& HitLocation) const;
