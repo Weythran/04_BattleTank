@@ -13,12 +13,19 @@ ATank::ATank()
 {
  	// Set this pawn to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = false;
+
+	// auto RootComponentTank = RootComponent;
+	// DeathSmoke = CreateDefaultSubobject<UParticleSystemComponent>(FName("Death Smoke"));
+	// DeathSmoke->AttachToComponent(RootComponentTank, FAttachmentTransformRules::KeepRelativeTransform);
+	// DeathSmoke->bAutoActivate = false;
 }
 
 void ATank::BeginPlay()
 {
 	Super::BeginPlay();
 	CurrentHealth = StartingHealth;
+	auto CurrentRootComponent = RootComponent->GetName();
+	UE_LOG(LogTemp, Warning, TEXT("%s"), *CurrentRootComponent)
 }
 
 float ATank::TakeDamage(float DamageAmount, struct FDamageEvent const& DamageEvent, class AController* EventInstigator, AActor* DamageCauser)
@@ -30,9 +37,7 @@ float ATank::TakeDamage(float DamageAmount, struct FDamageEvent const& DamageEve
 	if (CurrentHealth <= 0)
 	{	
 		OnDeath.Broadcast();
-		// DestructionSmoke = CreateDefaultSubobject<UParticleSystemComponent>(FName("Destruction Smoke"));
-		// DestructionSmoke->AttachToComponent(RootComponent, FAttachmentTransformRules::KeepRelativeTransform);
-		// DestructionSmoke->Activate();
+		/* DeathSmoke->Activate(); */
 	}
 
 	return DamageToApply;

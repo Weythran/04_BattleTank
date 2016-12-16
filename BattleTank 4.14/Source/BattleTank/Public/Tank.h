@@ -36,7 +36,7 @@ private:
 
 	virtual void BeginPlay() override;
 
-	UPROPERTY(VisibleAnywhere, Category = "Components")
-	UParticleSystemComponent* DestructionSmoke = nullptr;
+	// UPROPERTY(VisibleAnywhere, Category = "Components")
+	// UParticleSystemComponent* DeathSmoke = nullptr;
 
 };
